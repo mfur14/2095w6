@@ -13,8 +13,10 @@ app.set('view engine', 'html');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('common'));
+//app.use(moment);
 app.use(express.static('images')); // static images directory <-- no installation required just a directory 
 app.use(express.static('css'));  // static css directory
+// whats the public method for this?^
 app.listen(8888);
 
 
@@ -92,7 +94,7 @@ app.get('/deleteCompleted', function(req, res){
     res.redirect('/alltasks');
 });
 
-app.get('/deleteOldComplete', function(req, res){  // delete completed & past due date tasks
+app.get('/deleteOldComplete', function(req, res){
     // let filter = {status: "Complete"};
     let filter = { $and: [ { status: "Complete"}, {dueDate: { $lt : "2019-09-04"}}]};
     col.deleteMany(filter, function(err, obj){
@@ -101,18 +103,3 @@ app.get('/deleteOldComplete', function(req, res){  // delete completed & past du
     res.redirect('/alltasks');
 });
 
-// app.get('/deleteOldCompleteMoment', function(req, res){
-//     now = moment().format("YYYY-MM-DD");
-//     let filter = { $and: [ { status: "Complete"}, {dueDate: { $lt : now}}]};
-//     col.deleteMany(filter, function(err, obj){
-//         console.log(obj);
-//         console.log(now);
-//     });
-//     res.redirect('/alltasks');
-// });
-    
-// app.get('/time', function(req, res){
-//     now = moment().format("YYYY-MM-DD");
-//     console.log(mom);
-// });
-    
